@@ -23,3 +23,11 @@ build/
 # OS
 .DS_Store
 Thumbs.db
+
+# Data and models (keep large files out of the main repo)
+data/
+models/
+*.pkl
+*.joblib
+*.h5
+*.csv
