@@ -135,18 +135,3 @@ This project is open source and available under the MIT License.
 **Ganesh-DA**
 - GitHub: [@Ganesh-DA](https://github.com/Ganesh-DA)
 - Email: ganeshshimpi330@gmail.com
-
-## 📞 Support
-
-For questions or issues:
-1. Check the project [GitHub Issues](https://github.com/Ganesh-DA/OpenPowerLiffting/issues)
-2. Review the code comments in each file
-3. Test with sample data first
-
-## 🎉 Have Fun Lifting!
-
-Use this predictor to set realistic strength goals and track your progress toward them. Remember: consistency in training and proper nutrition are key! 💪
-
----
-
-**Last Updated**: February 2026
