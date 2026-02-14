@@ -1,7 +1,6 @@
 import streamlit as st
-import joblib
 import pandas as pd
-import config # Using the config we created earlier
+from src.utils import load_model_and_features, prepare_input_df, predict_lifts
 
 # --- PAGE SETUP ---
 st.set_page_config(page_title="Powerlifting Predictor", page_icon="🏋️‍♂️")
@@ -10,15 +9,9 @@ st.title("🏋️‍♂️ Powerlifting Strength AI")
 st.write("Predict your potential Squat, Bench, and Deadlift based on global competition data.")
 
 # --- LOAD MODEL ---
-@st.cache_resource # This keeps the app fast by loading the model only once
-def load_model():
-    model = joblib.load(config.MODEL_FILE)
-    features = joblib.load(config.FEATURES_FILE)
-    return model, features
-
 try:
-    model, features = load_model()
-except:
+    model, features = load_model_and_features()
+except Exception:
     st.error("Model files not found! Please run train.py first.")
     st.stop()
 
@@ -31,17 +24,10 @@ equip = st.sidebar.selectbox("Equipment", ["Raw", "Wraps", "Single-ply", "Multi-
 
 # --- PREDICTION LOGIC ---
 if st.sidebar.button("Predict My Strength"):
-    # Create input row
-    input_df = pd.DataFrame(0, index=[0], columns=features)
-    input_df['Age'] = age
-    input_df['BodyweightKg'] = weight
-    
-    # Set flags
-    if f'Sex_{sex}' in features: input_df[f'Sex_{sex}'] = 1
-    if f'Equipment_{equip}' in features: input_df[f'Equipment_{equip}'] = 1
-    
+    # Prepare input using helper (faster and clearer)
+    input_df = prepare_input_df(features, age, weight, sex, equip)
     # Predict
-    preds = model.predict(input_df)[0]
+    preds = predict_lifts(model, input_df)
     
     # --- DISPLAY RESULTS ---
     col1, col2, col3 = st.columns(3)
